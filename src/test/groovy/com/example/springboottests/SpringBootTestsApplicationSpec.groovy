@@ -6,7 +6,7 @@ import org.springframework.test.context.ContextConfiguration
 import spock.lang.Specification
 
 @ContextConfiguration(classes = [SpringBootTestsApplication.class])
-class SpringBootTestsApplicationTests extends Specification {
+class SpringBootTestsApplicationSpec extends Specification {
 
     @Autowired
     ApplicationContext applicationContext
