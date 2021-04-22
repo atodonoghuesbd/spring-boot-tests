@@ -1,0 +1,8 @@
+spring:
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+  datasource:
+    url: jdbc:mysql://localhost:3306/
+    driverClassName: com.mysql.cj.jdbc.Driver
+    username: root
