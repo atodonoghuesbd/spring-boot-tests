@@ -1,7 +1,7 @@
 package com.example.springboottests.controller;
 
 import com.example.springboottests.model.transport.PersonTransportObject;
-import com.example.springboottests.service.PersonService;
+import com.example.springboottests.service.data.PersonService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

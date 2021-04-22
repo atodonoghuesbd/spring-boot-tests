@@ -13,7 +13,7 @@ class SpringBootTestsApplicationSpec extends Specification {
 
     def "context loads"() {
         when:
-            1
+            null
         then:
             applicationContext != null
     }

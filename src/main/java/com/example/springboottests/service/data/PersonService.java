@@ -1,4 +1,4 @@
-package com.example.springboottests.service;
+package com.example.springboottests.service.data;
 
 import com.example.springboottests.model.persistence.PersonEntity;
 import com.example.springboottests.model.transport.PersonTransportObject;
