@@ -1,4 +1,4 @@
-package com.example.springboottests.model;
+package com.example.springboottests.model.transport;
 
 import lombok.Builder;
 import lombok.Data;
@@ -6,11 +6,10 @@ import lombok.Data;
 import java.math.BigDecimal;
 import java.util.Currency;
 
-@Builder
 @Data
-public class Transaction {
-    private Long sourcePersonId;
-    private Long targetPersonId;
+@Builder
+public class WalletTransportObject {
+    private Long id;
     private Currency currency;
     private BigDecimal cardinality;
 }

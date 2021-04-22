@@ -1,9 +1,14 @@
 package com.example.springboottests.service;
 
+import com.example.springboottests.model.Transaction;
+import com.example.springboottests.model.transport.PersonTransportObject;
 import com.example.springboottests.service.data.PersonService;
 import com.example.springboottests.service.data.WalletService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.Arrays;
+import java.util.Collections;
 
 @Service
 public class ExchangeService {
@@ -16,6 +21,14 @@ public class ExchangeService {
         this.walletService = walletService;
     }
 
+    public String exchange(Transaction transaction) {
+        PersonTransportObject[] arr = { personService.getPerson(transaction.getSourcePersonId()),
+          personService.getPerson(transaction.getTargetPersonId())};
+        if (arr[0]
+
+
+        return "";
+    }
     // todo: implement me
 
     /**
