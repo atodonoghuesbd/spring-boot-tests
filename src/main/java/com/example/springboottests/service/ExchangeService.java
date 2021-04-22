@@ -23,11 +23,11 @@ public class ExchangeService {
      *
      * This service should accept a Transaction request, containing the IDs of a target and source.
      *
-     * If the IDs map to users with differing currencies the transaction should fail. An appropriate  failure message
+     * If the IDs map to users with differing currencies the transaction should fail. An appropriate failure message
      * should be returned.
      *
      * If the source's currency cardinality is exceeded by the transaction cardinality the transaction should fail. An
-     * appropriate failure  message should be returned.
+     * appropriate failure message should be returned.
      *
      * If the transaction is otherwise valid it should report a message of success.
      *
