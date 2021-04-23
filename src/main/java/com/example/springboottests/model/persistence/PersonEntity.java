@@ -21,7 +21,7 @@ public class PersonEntity {
     @Column
     private String last_name;
     @OneToOne
-    private WalletEntity walletEntity;
+    private WalletEntity wallet;
 
     public PersonEntity() {
 

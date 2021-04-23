@@ -14,7 +14,7 @@ import org.springframework.context.annotation.Configuration;
 public class OrikaConfiguration {
     private static final MapperFactory mapperFactory = new DefaultMapperFactory.Builder().build();
 
-    {
+    static {
         registerPersonMapper(mapperFactory);
         registerWalletMapper(mapperFactory);
     }

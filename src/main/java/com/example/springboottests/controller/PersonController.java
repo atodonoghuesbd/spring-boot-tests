@@ -35,8 +35,8 @@ public class PersonController {
     }
 
     @PostMapping(value = "/")
-    public ResponseEntity<String> postPerson(@RequestBody PersonTransportObject personTransportObject) {
-        personService.postPerson(personTransportObject);
+    public ResponseEntity<String> postPerson(@RequestBody PersonTransportObject person) {
+        personService.postPerson(person);
         return new ResponseEntity<>("", HttpStatus.CREATED);
     }
 }
