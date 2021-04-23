@@ -7,9 +7,6 @@ import com.example.springboottests.service.data.WalletService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Arrays;
-import java.util.Collections;
-
 @Service
 public class ExchangeService {
     private final PersonService personService;
@@ -24,12 +21,9 @@ public class ExchangeService {
     public String exchange(Transaction transaction) {
         PersonTransportObject[] arr = { personService.getPerson(transaction.getSourcePersonId()),
           personService.getPerson(transaction.getTargetPersonId())};
-        if (arr[0]
-
 
         return "";
     }
-    // todo: implement me
 
     /**
      * version one:
@@ -48,4 +42,6 @@ public class ExchangeService {
      *
      * failures should throw custom exceptions and be handled with Controller Advice
      */
+
+    // todo: implement me
 }
