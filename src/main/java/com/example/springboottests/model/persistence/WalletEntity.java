@@ -14,8 +14,4 @@ public class WalletEntity {
     private Currency currency;
     @Column
     private BigDecimal cardinality;
-
-    public WalletEntity() {
-
-    }
 }

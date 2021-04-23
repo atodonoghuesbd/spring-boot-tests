@@ -8,7 +8,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToOne;
 
 @Data
 @Entity(name = "person")
@@ -23,8 +22,4 @@ public class PersonEntity {
     private String last_name;
     @Embedded
     private WalletEntity wallet;
-
-    public PersonEntity() {
-
-    }
 }
