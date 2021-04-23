@@ -34,7 +34,7 @@ public class OrikaConfiguration {
     }
 
     @Bean
-    public MapperFacade mapperFacade() {
+    public static MapperFacade mapperFacade() {
         return mapperFactory.getMapperFacade();
     }
 }
