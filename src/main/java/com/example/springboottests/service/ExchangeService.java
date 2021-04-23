@@ -83,7 +83,7 @@ public class ExchangeService {
     }
 
     private static void validateTargetCurrency(Currency targetCurrency, Currency currency) {
-        if(targetCurrency != currency)
+        if (targetCurrency != currency)
             throw new InvalidTransactionException(INVALID_TARGET_CURRENCY);
     }
 
