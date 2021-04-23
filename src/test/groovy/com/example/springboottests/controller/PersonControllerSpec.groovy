@@ -22,13 +22,8 @@ class PersonControllerSpec extends Specification {
 
         person = PersonTransportObject
                 .builder()
-                .firstName("Austin")
-                .lastName("O'Donoghue")
                 .wallet(WalletTransportObject
-                        .builder()
-                        .cardinality(BigDecimal.ZERO)
-                        .currency(Currency.getInstance(Locale.US))
-                        .build())
+                        .builder().build())
                 .build()
 
         when:
