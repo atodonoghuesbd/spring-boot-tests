@@ -19,7 +19,6 @@ class ExchangeServiceSpec extends Specification {
     def "successful transaction"() {
 
         given:
-
             float value = 1_000.00f
             def cardinality = new BigDecimal(value)
             long sourceId = 0l;
@@ -67,7 +66,6 @@ class ExchangeServiceSpec extends Specification {
     def "insufficient funds"() {
 
         given:
-
             float value = 1_000.00f
             def cardinality = new BigDecimal(value)
             long sourceId = 0l;
@@ -105,7 +103,6 @@ class ExchangeServiceSpec extends Specification {
 
             personService.getPerson(sourceId) >> source
             personService.getPerson(targetId) >> target
-
 
         when:
 

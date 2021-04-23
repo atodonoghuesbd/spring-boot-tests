@@ -14,8 +14,8 @@ class SpringBootTestsApplicationIntSpec extends Specification {
 
     def "context loads"() {
         when:
-        null
+            null
         then:
-        applicationContext != null
+            applicationContext != null
     }
 }
