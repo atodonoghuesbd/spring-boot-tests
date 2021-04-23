@@ -12,10 +12,10 @@ import java.util.Currency;
 
 @Service
 public class ExchangeService {
-    private static final String INVALID_SOURCE_CURRENCY = "No exchange transacted, transaction currency and source currency mismatch.";
-    private static final String INVALID_TARGET_CURRENCY = "No exchange transacted, transaction currency and target currency mismatch.";
-    private static final String INSUFFICIENT_FUNDS = "Insufficient source cardinality for transaction.";
-    private static final String SUCCESS = "Exchange transacted successfully.";
+    protected static final String INVALID_SOURCE_CURRENCY = "No exchange transacted, transaction currency and source currency mismatch.";
+    protected static final String INVALID_TARGET_CURRENCY = "No exchange transacted, transaction currency and target currency mismatch.";
+    protected static final String INSUFFICIENT_FUNDS = "Insufficient source cardinality for transaction.";
+    protected static final String SUCCESS = "Exchange transacted successfully.";
     private final PersonService personService;
 
     @Autowired
@@ -58,13 +58,13 @@ public class ExchangeService {
         BigDecimal cardinality = transaction.getCardinality();
 
 
-        if (!validateSourceCurrency(sourceCurrency, currency))
+        if (validateSourceCurrency(sourceCurrency, currency))
             return INVALID_SOURCE_CURRENCY;
 
-        if (!validateTargetCurrency(targetCurrency, currency))
+        if (validateTargetCurrency(targetCurrency, currency))
             return INVALID_TARGET_CURRENCY;
 
-        if (!validateFunds(sourceCardinality, cardinality))
+        if (validateFunds(sourceCardinality, cardinality))
             return INSUFFICIENT_FUNDS;
 
         executeTransaction(source, target, cardinality);
@@ -73,15 +73,15 @@ public class ExchangeService {
     }
 
     private boolean validateSourceCurrency(Currency sourceCurrency, Currency currency) {
-        return sourceCurrency == currency;
+        return sourceCurrency != currency;
     }
 
     private boolean validateTargetCurrency(Currency targetCurrency, Currency currency) {
-        return targetCurrency == currency;
+        return targetCurrency != currency;
     }
 
     private boolean validateFunds(BigDecimal sourceCardinality, BigDecimal cardinality) {
-        return cardinality.compareTo(sourceCardinality) > 0;
+        return 0 < cardinality.compareTo(sourceCardinality);
     }
 
     @Transactional
