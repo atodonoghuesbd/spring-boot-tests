@@ -18,13 +18,6 @@ public class ExchangeService {
         this.walletService = walletService;
     }
 
-    public String exchange(Transaction transaction) {
-        PersonTransportObject[] arr = { personService.getPerson(transaction.getSourcePersonId()),
-          personService.getPerson(transaction.getTargetPersonId())};
-
-        return "";
-    }
-
     /**
      * version one:
      *
@@ -44,4 +37,11 @@ public class ExchangeService {
      */
 
     // todo: implement me
+    public String exchange(Transaction transaction) {
+        PersonTransportObject[] arr = { personService.getPerson(transaction.getSourcePersonId()),
+        personService.getPerson(transaction.getTargetPersonId())};
+
+        return "";
+    }
+
 }
