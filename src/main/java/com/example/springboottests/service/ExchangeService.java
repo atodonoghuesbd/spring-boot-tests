@@ -25,8 +25,6 @@ public class ExchangeService {
     }
 
     /**
-     * version one:
-     * <p>
      * This service should accept a Transaction request, containing the IDs of a target and source.
      * <p>
      * If the IDs map to users with differing currencies the transaction should fail. An appropriate failure message
@@ -36,13 +34,8 @@ public class ExchangeService {
      * appropriate failure message should be returned.
      * <p>
      * If the transaction is otherwise valid it should report a message of success.
-     * <p>
-     * version two:
-     * <p>
-     * failures should throw custom exceptions and be handled with Controller Advice
      */
 
-    // todo: implement me
     public String exchange(Transaction transaction) {
 
         PersonTransportObject source = getPerson(transaction.getSourcePersonId());

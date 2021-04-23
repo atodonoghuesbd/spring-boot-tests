@@ -12,7 +12,7 @@ class ExchangeServiceSpec extends Specification {
     ExchangeService exchangeService
 
     def "setup"() {
-        personService = Mock()
+        personService = Stub()
         exchangeService = new ExchangeService(personService)
     }
 
@@ -54,15 +54,13 @@ class ExchangeServiceSpec extends Specification {
                 .currency(currency)
                 .cardinality(cardinality)
                 .build()
+            personService.getPerson(sourceId) >> source
+            personService.getPerson(targetId) >> target
 
         when:
-
             def returnString = exchangeService.exchange(transaction)
 
         then:
-
-            1 * personService.getPerson(sourceId) >> source
-            1 * personService.getPerson(targetId) >> target
             returnString == ExchangeService.SUCCESS
     }
 
@@ -105,17 +103,18 @@ class ExchangeServiceSpec extends Specification {
                 .cardinality(cardinality)
                 .build()
 
+            personService.getPerson(sourceId) >> source
+            personService.getPerson(targetId) >> target
+
+
         when:
 
             exchangeService.exchange(transaction)
 
         then:
 
-            1 * personService.getPerson(sourceId) >> source
-            1 * personService.getPerson(targetId) >> target
             InvalidTransactionException thrown = thrown()
             thrown.getMessage() == ExchangeService.INSUFFICIENT_FUNDS
-
     }
 
     def "invalid source currency"() {
@@ -158,12 +157,13 @@ class ExchangeServiceSpec extends Specification {
                 .cardinality(cardinality)
                 .build()
 
+            personService.getPerson(sourceId) >> source
+            personService.getPerson(targetId) >> target
+
         when:
             exchangeService.exchange(transaction)
 
         then:
-            1 * personService.getPerson(sourceId) >> source
-            1 * personService.getPerson(targetId) >> target
             InvalidTransactionException thrown = thrown()
             thrown.getMessage() == ExchangeService.INVALID_SOURCE_CURRENCY
     }
@@ -201,7 +201,7 @@ class ExchangeServiceSpec extends Specification {
                 .id(targetId)
                 .build()
 
-        Transaction transaction = Transaction
+            Transaction transaction = Transaction
                 .builder()
                 .sourcePersonId(sourceId)
                 .targetPersonId(targetId)
@@ -209,15 +209,14 @@ class ExchangeServiceSpec extends Specification {
                 .cardinality(cardinality)
                 .build()
 
-        when:
+            personService.getPerson(sourceId) >> source
+            personService.getPerson(targetId) >> target
 
+        when:
             exchangeService.exchange(transaction)
 
         then:
-
-        1 * personService.getPerson(sourceId) >> source
-        1 * personService.getPerson(targetId) >> target
-        InvalidTransactionException thrown = thrown()
-        thrown.getMessage() == ExchangeService.INVALID_TARGET_CURRENCY
+            InvalidTransactionException thrown = thrown()
+            thrown.getMessage() == ExchangeService.INVALID_TARGET_CURRENCY
     }
 }

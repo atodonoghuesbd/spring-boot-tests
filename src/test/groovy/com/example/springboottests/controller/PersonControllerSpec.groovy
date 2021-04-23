@@ -17,22 +17,19 @@ class PersonControllerSpec extends Specification {
 
     def "getPeople"() {
         given:
+            personController = new PersonController(personService)
 
-        personController = new PersonController(personService)
-
-        person = PersonTransportObject
+            person = PersonTransportObject
                 .builder()
                 .wallet(WalletTransportObject
                         .builder().build())
                 .build()
 
         when:
-
-        personController.getPeople()
+            personController.getPeople()
 
         then:
-
-        1 * personService.getPeople() >> Collections.singletonList(person)
+            1 * personService.getPeople() >> Collections.singletonList(person)
     }
 
     def "getPerson"() {

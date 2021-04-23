@@ -14,11 +14,9 @@ class ExchangeControllerSpec extends Specification {
 
     def "exchange"() {
         when:
-
             exchangeController.exchange(Transaction.builder().build())
 
         then:
-
             1 * exchangeService.exchange(_ as Transaction) >> new String()
     }
 }
