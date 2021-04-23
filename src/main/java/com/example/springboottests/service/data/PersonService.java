@@ -31,4 +31,8 @@ public class PersonService {
     public void postPerson(PersonTransportObject personTransportObject) {
         personRepository.save(mapperFacade.map(personTransportObject, PersonEntity.class));
     }
+
+    public void savePerson(PersonTransportObject personTransportObject) {
+        postPerson(personTransportObject);
+    }
 }

@@ -40,11 +40,12 @@ class PersonControllerSpec extends Specification {
         1 * personService.getPeople() >> Collections.singletonList(person)
     }
 
-    def "getPerson" () {
+    def "getPerson"() {
         // todo: implement me
     }
 
     def "postPerson"() {
         // todo: implement me
     }
+
 }
