@@ -48,14 +48,9 @@ public class ExchangeService {
         BigDecimal sourceCardinality = getCardinality(source);
         BigDecimal cardinality = getCardinality(transaction);
 
-        if (validateSourceCurrency(sourceCurrency, currency))
-            throw new InvalidTransactionException(INVALID_SOURCE_CURRENCY);
-
-        if (validateTargetCurrency(targetCurrency, currency))
-            throw new InvalidTransactionException(INVALID_TARGET_CURRENCY);
-
-        if (validateFunds(sourceCardinality, cardinality))
-            throw new InvalidTransactionException(INSUFFICIENT_FUNDS);
+        validateSourceCurrency(sourceCurrency, currency);
+        validateTargetCurrency(targetCurrency, currency);
+        validateFunds(sourceCardinality, cardinality);
 
         executeTransaction(source, target, cardinality);
 
@@ -82,16 +77,19 @@ public class ExchangeService {
         return transaction.getCurrency();
     }
 
-    private static boolean validateSourceCurrency(Currency sourceCurrency, Currency currency) {
-        return sourceCurrency != currency;
+    private static void validateSourceCurrency(Currency sourceCurrency, Currency currency) {
+        if (sourceCurrency != currency)
+            throw new InvalidTransactionException(INVALID_SOURCE_CURRENCY);
     }
 
-    private static boolean validateTargetCurrency(Currency targetCurrency, Currency currency) {
-        return targetCurrency != currency;
+    private static void validateTargetCurrency(Currency targetCurrency, Currency currency) {
+        if(targetCurrency != currency)
+            throw new InvalidTransactionException(INVALID_TARGET_CURRENCY);
     }
 
-    private static boolean validateFunds(BigDecimal sourceCardinality, BigDecimal cardinality) {
-        return 0 < cardinality.compareTo(sourceCardinality);
+    private static void validateFunds(BigDecimal sourceCardinality, BigDecimal cardinality) {
+        if (0 < cardinality.compareTo(sourceCardinality))
+            throw new InvalidTransactionException(INSUFFICIENT_FUNDS);
     }
 
     @Transactional
