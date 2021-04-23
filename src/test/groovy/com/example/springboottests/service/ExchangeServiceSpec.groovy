@@ -53,6 +53,7 @@ class ExchangeServiceSpec extends Specification {
                 .currency(currency)
                 .cardinality(cardinality)
                 .build()
+        
             personService.getPerson(sourceId) >> source
             personService.getPerson(targetId) >> target
 
