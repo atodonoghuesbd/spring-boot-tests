@@ -1,5 +1,6 @@
 package com.example.springboottests.service;
 
+import com.example.springboottests.exception.InvalidTransactionException;
 import com.example.springboottests.model.Transaction;
 import com.example.springboottests.model.transport.PersonTransportObject;
 import com.example.springboottests.service.data.PersonService;
@@ -44,43 +45,59 @@ public class ExchangeService {
     // todo: implement me
     public String exchange(Transaction transaction) {
 
-        Long sourceId = transaction.getSourcePersonId();
-        Long targetId = transaction.getTargetPersonId();
+        PersonTransportObject source = getPerson(transaction.getSourcePersonId());
+        PersonTransportObject target = getPerson(transaction.getTargetPersonId());
 
-        PersonTransportObject source = personService.getPerson(sourceId);
-        PersonTransportObject target = personService.getPerson(targetId);
+        Currency sourceCurrency = getCurrency(source);
+        Currency targetCurrency = getCurrency(target);
+        Currency currency = getCurrency(transaction);
 
-        Currency sourceCurrency = source.getWallet().getCurrency();
-        Currency targetCurrency = target.getWallet().getCurrency();
-        Currency currency = transaction.getCurrency();
-
-        BigDecimal sourceCardinality = source.getWallet().getCardinality();
-        BigDecimal cardinality = transaction.getCardinality();
-
+        BigDecimal sourceCardinality = getCardinality(source);
+        BigDecimal cardinality = getCardinality(transaction);
 
         if (validateSourceCurrency(sourceCurrency, currency))
-            return INVALID_SOURCE_CURRENCY;
+            throw new InvalidTransactionException(INVALID_SOURCE_CURRENCY);
 
         if (validateTargetCurrency(targetCurrency, currency))
-            return INVALID_TARGET_CURRENCY;
+            throw new InvalidTransactionException(INVALID_TARGET_CURRENCY);
 
         if (validateFunds(sourceCardinality, cardinality))
-            return INSUFFICIENT_FUNDS;
+            throw new InvalidTransactionException(INSUFFICIENT_FUNDS);
 
         executeTransaction(source, target, cardinality);
 
         return SUCCESS;
     }
 
-    private boolean validateSourceCurrency(Currency sourceCurrency, Currency currency) {
+    private PersonTransportObject getPerson(Long id) {
+        return personService.getPerson(id);
+    }
+
+    private static BigDecimal getCardinality(PersonTransportObject personTransportObject) {
+        return personTransportObject.getWallet().getCardinality();
+    }
+
+    private static BigDecimal getCardinality(Transaction transaction) {
+        return transaction.getCardinality();
+    }
+
+    private static Currency getCurrency(PersonTransportObject personTransportObject) {
+        return personTransportObject.getWallet().getCurrency();
+    }
+
+    private static Currency getCurrency(Transaction transaction) {
+        return transaction.getCurrency();
+    }
+
+    private static boolean validateSourceCurrency(Currency sourceCurrency, Currency currency) {
         return sourceCurrency != currency;
     }
 
-    private boolean validateTargetCurrency(Currency targetCurrency, Currency currency) {
+    private static boolean validateTargetCurrency(Currency targetCurrency, Currency currency) {
         return targetCurrency != currency;
     }
 
-    private boolean validateFunds(BigDecimal sourceCardinality, BigDecimal cardinality) {
+    private static boolean validateFunds(BigDecimal sourceCardinality, BigDecimal cardinality) {
         return 0 < cardinality.compareTo(sourceCardinality);
     }
 

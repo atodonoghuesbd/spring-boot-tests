@@ -1,6 +1,6 @@
 package com.example.springboottests.service
 
-
+import com.example.springboottests.exception.InvalidTransactionException
 import com.example.springboottests.model.Transaction
 import com.example.springboottests.model.transport.PersonTransportObject
 import com.example.springboottests.model.transport.WalletTransportObject
@@ -107,20 +107,20 @@ class ExchangeServiceSpec extends Specification {
 
         when:
 
-            def returnString = exchangeService.exchange(transaction)
+            exchangeService.exchange(transaction)
 
         then:
 
             1 * personService.getPerson(sourceId) >> source
             1 * personService.getPerson(targetId) >> target
-            returnString == ExchangeService.INSUFFICIENT_FUNDS
+            InvalidTransactionException thrown = thrown()
+            thrown.getMessage() == ExchangeService.INSUFFICIENT_FUNDS
 
     }
 
     def "invalid source currency"() {
 
         given:
-
             float value = 0.0f
             def cardinality = new BigDecimal(value)
             long sourceId = 0l
@@ -159,15 +159,13 @@ class ExchangeServiceSpec extends Specification {
                 .build()
 
         when:
-
-            def returnString = exchangeService.exchange(transaction)
+            exchangeService.exchange(transaction)
 
         then:
-
             1 * personService.getPerson(sourceId) >> source
             1 * personService.getPerson(targetId) >> target
-            returnString == ExchangeService.INVALID_SOURCE_CURRENCY
-
+            InvalidTransactionException thrown = thrown()
+            thrown.getMessage() == ExchangeService.INVALID_SOURCE_CURRENCY
     }
 
     def "invalid target currency"() {
@@ -213,12 +211,13 @@ class ExchangeServiceSpec extends Specification {
 
         when:
 
-        def returnString = exchangeService.exchange(transaction)
+            exchangeService.exchange(transaction)
 
         then:
 
         1 * personService.getPerson(sourceId) >> source
         1 * personService.getPerson(targetId) >> target
-        returnString == ExchangeService.INVALID_TARGET_CURRENCY
+        InvalidTransactionException thrown = thrown()
+        thrown.getMessage() == ExchangeService.INVALID_TARGET_CURRENCY
     }
 }
