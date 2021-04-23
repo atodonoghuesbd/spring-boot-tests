@@ -22,8 +22,4 @@ public class PersonEntity {
     private String last_name;
     @Embedded
     private WalletEntity wallet;
-
-    public PersonEntity() {
-
-    }
 }
