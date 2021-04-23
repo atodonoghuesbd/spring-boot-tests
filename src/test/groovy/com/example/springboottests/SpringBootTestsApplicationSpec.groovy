@@ -1,5 +1,6 @@
 package com.example.springboottests
 
+
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.context.ApplicationContext
 import org.springframework.test.context.ContextConfiguration
@@ -16,6 +17,7 @@ class SpringBootTestsApplicationSpec extends Specification {
             null
         then:
             applicationContext != null
-    }
 
+
+    }
 }

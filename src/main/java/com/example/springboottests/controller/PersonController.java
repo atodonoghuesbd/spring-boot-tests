@@ -30,7 +30,7 @@ public class PersonController {
     }
 
     @GetMapping(value = "/{id}")
-    public ResponseEntity<PersonTransportObject> getPeople(@PathVariable(value = "id") Long id) {
+    public ResponseEntity<PersonTransportObject> getPerson(@PathVariable(value = "id") Long id) {
         return new ResponseEntity<>(personService.getPerson(id), HttpStatus.OK);
     }
 

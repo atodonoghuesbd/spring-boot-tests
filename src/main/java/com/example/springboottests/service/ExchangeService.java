@@ -38,6 +38,7 @@ public class ExchangeService {
 
     // todo: implement me
     public String exchange(Transaction transaction) {
+        Long sourceId = transaction.getSourcePersonId();
         PersonTransportObject[] arr = { personService.getPerson(transaction.getSourcePersonId()),
         personService.getPerson(transaction.getTargetPersonId())};
 
