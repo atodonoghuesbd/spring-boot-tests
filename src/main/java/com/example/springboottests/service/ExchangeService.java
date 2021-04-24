@@ -24,6 +24,37 @@ public class ExchangeService {
         this.personService = personService;
     }
 
+    private static BigDecimal getCardinality(PersonTransportObject personTransportObject) {
+        return personTransportObject.getWallet().getCardinality();
+    }
+
+    private static BigDecimal getCardinality(Transaction transaction) {
+        return transaction.getCardinality();
+    }
+
+    private static Currency getCurrency(PersonTransportObject personTransportObject) {
+        return personTransportObject.getWallet().getCurrency();
+    }
+
+    private static Currency getCurrency(Transaction transaction) {
+        return transaction.getCurrency();
+    }
+
+    private static void validateSourceCurrency(Currency sourceCurrency, Currency currency) {
+        if (sourceCurrency != currency)
+            throw new InvalidTransactionException(INVALID_SOURCE_CURRENCY);
+    }
+
+    private static void validateTargetCurrency(Currency targetCurrency, Currency currency) {
+        if (targetCurrency != currency)
+            throw new InvalidTransactionException(INVALID_TARGET_CURRENCY);
+    }
+
+    private static void validateFunds(BigDecimal sourceCardinality, BigDecimal cardinality) {
+        if (0 < cardinality.compareTo(sourceCardinality))
+            throw new InvalidTransactionException(INSUFFICIENT_FUNDS);
+    }
+
     /**
      * This service should accept a Transaction request, containing the IDs of a target and source.
      * <p>
@@ -59,37 +90,6 @@ public class ExchangeService {
 
     private PersonTransportObject getPerson(Long id) {
         return personService.getPerson(id);
-    }
-
-    private static BigDecimal getCardinality(PersonTransportObject personTransportObject) {
-        return personTransportObject.getWallet().getCardinality();
-    }
-
-    private static BigDecimal getCardinality(Transaction transaction) {
-        return transaction.getCardinality();
-    }
-
-    private static Currency getCurrency(PersonTransportObject personTransportObject) {
-        return personTransportObject.getWallet().getCurrency();
-    }
-
-    private static Currency getCurrency(Transaction transaction) {
-        return transaction.getCurrency();
-    }
-
-    private static void validateSourceCurrency(Currency sourceCurrency, Currency currency) {
-        if (sourceCurrency != currency)
-            throw new InvalidTransactionException(INVALID_SOURCE_CURRENCY);
-    }
-
-    private static void validateTargetCurrency(Currency targetCurrency, Currency currency) {
-        if (targetCurrency != currency)
-            throw new InvalidTransactionException(INVALID_TARGET_CURRENCY);
-    }
-
-    private static void validateFunds(BigDecimal sourceCardinality, BigDecimal cardinality) {
-        if (0 < cardinality.compareTo(sourceCardinality))
-            throw new InvalidTransactionException(INSUFFICIENT_FUNDS);
     }
 
     @Transactional

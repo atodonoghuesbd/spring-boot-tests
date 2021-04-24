@@ -19,14 +19,14 @@ class ExchangeServiceSpec extends Specification {
     def "successful transaction"() {
 
         given:
-            float value = 1_000.00f
-            def cardinality = new BigDecimal(value)
-            long sourceId = 0l;
-            long targetId = 1l;
-            Locale locale = Locale.US;
-            Currency currency = Currency.getInstance(locale)
+        float value = 1_000.00f
+        def cardinality = new BigDecimal(value)
+        long sourceId = 0l;
+        long targetId = 1l;
+        Locale locale = Locale.US;
+        Currency currency = Currency.getInstance(locale)
 
-            def source = PersonTransportObject
+        def source = PersonTransportObject
                 .builder()
                 .wallet(WalletTransportObject
                         .builder()
@@ -36,7 +36,7 @@ class ExchangeServiceSpec extends Specification {
                 .id(sourceId)
                 .build()
 
-            def target = PersonTransportObject
+        def target = PersonTransportObject
                 .builder()
                 .wallet(WalletTransportObject
                         .builder()
@@ -46,35 +46,35 @@ class ExchangeServiceSpec extends Specification {
                 .id(targetId)
                 .build()
 
-            Transaction transaction = Transaction
+        Transaction transaction = Transaction
                 .builder()
                 .sourcePersonId(sourceId)
                 .targetPersonId(targetId)
                 .currency(currency)
                 .cardinality(cardinality)
                 .build()
-        
-            personService.getPerson(sourceId) >> source
-            personService.getPerson(targetId) >> target
+
+        personService.getPerson(sourceId) >> source
+        personService.getPerson(targetId) >> target
 
         when:
-            def returnString = exchangeService.exchange(transaction)
+        def returnString = exchangeService.exchange(transaction)
 
         then:
-            returnString == ExchangeService.SUCCESS
+        returnString == ExchangeService.SUCCESS
     }
 
     def "insufficient funds"() {
 
         given:
-            float value = 1_000.00f
-            def cardinality = new BigDecimal(value)
-            long sourceId = 0l;
-            long targetId = 1l;
-            Locale locale = Locale.US;
-            Currency currency = Currency.getInstance(locale)
+        float value = 1_000.00f
+        def cardinality = new BigDecimal(value)
+        long sourceId = 0l;
+        long targetId = 1l;
+        Locale locale = Locale.US;
+        Currency currency = Currency.getInstance(locale)
 
-            def source = PersonTransportObject
+        def source = PersonTransportObject
                 .builder()
                 .wallet(WalletTransportObject
                         .builder()
@@ -84,7 +84,7 @@ class ExchangeServiceSpec extends Specification {
                 .id(sourceId)
                 .build()
 
-            def target = PersonTransportObject
+        def target = PersonTransportObject
                 .builder()
                 .wallet(WalletTransportObject
                         .builder()
@@ -94,7 +94,7 @@ class ExchangeServiceSpec extends Specification {
                 .id(targetId)
                 .build()
 
-            Transaction transaction = Transaction
+        Transaction transaction = Transaction
                 .builder()
                 .sourcePersonId(sourceId)
                 .targetPersonId(targetId)
@@ -102,32 +102,32 @@ class ExchangeServiceSpec extends Specification {
                 .cardinality(cardinality)
                 .build()
 
-            personService.getPerson(sourceId) >> source
-            personService.getPerson(targetId) >> target
+        personService.getPerson(sourceId) >> source
+        personService.getPerson(targetId) >> target
 
         when:
 
-            exchangeService.exchange(transaction)
+        exchangeService.exchange(transaction)
 
         then:
 
-            InvalidTransactionException thrown = thrown()
-            thrown.getMessage() == ExchangeService.INSUFFICIENT_FUNDS
+        InvalidTransactionException thrown = thrown()
+        thrown.getMessage() == ExchangeService.INSUFFICIENT_FUNDS
     }
 
     def "invalid source currency"() {
 
         given:
-            float value = 0.0f
-            def cardinality = new BigDecimal(value)
-            long sourceId = 0l
-            long targetId = 1l
-            Locale locale = Locale.US
-            Locale sourceLocale = Locale.ITALY
-            Currency currency = Currency.getInstance(locale)
-            Currency sourceCurrency = Currency.getInstance(sourceLocale)
+        float value = 0.0f
+        def cardinality = new BigDecimal(value)
+        long sourceId = 0l
+        long targetId = 1l
+        Locale locale = Locale.US
+        Locale sourceLocale = Locale.ITALY
+        Currency currency = Currency.getInstance(locale)
+        Currency sourceCurrency = Currency.getInstance(sourceLocale)
 
-            def source = PersonTransportObject
+        def source = PersonTransportObject
                 .builder()
                 .wallet(WalletTransportObject
                         .builder()
@@ -137,7 +137,7 @@ class ExchangeServiceSpec extends Specification {
                 .id(sourceId)
                 .build()
 
-            def target = PersonTransportObject
+        def target = PersonTransportObject
                 .builder()
                 .wallet(WalletTransportObject
                         .builder()
@@ -147,7 +147,7 @@ class ExchangeServiceSpec extends Specification {
                 .id(targetId)
                 .build()
 
-            Transaction transaction = Transaction
+        Transaction transaction = Transaction
                 .builder()
                 .sourcePersonId(sourceId)
                 .targetPersonId(targetId)
@@ -155,29 +155,29 @@ class ExchangeServiceSpec extends Specification {
                 .cardinality(cardinality)
                 .build()
 
-            personService.getPerson(sourceId) >> source
-            personService.getPerson(targetId) >> target
+        personService.getPerson(sourceId) >> source
+        personService.getPerson(targetId) >> target
 
         when:
-            exchangeService.exchange(transaction)
+        exchangeService.exchange(transaction)
 
         then:
-            InvalidTransactionException thrown = thrown()
-            thrown.getMessage() == ExchangeService.INVALID_SOURCE_CURRENCY
+        InvalidTransactionException thrown = thrown()
+        thrown.getMessage() == ExchangeService.INVALID_SOURCE_CURRENCY
     }
 
     def "invalid target currency"() {
 
         given:
 
-            float value = 0.0f
-            def cardinality = new BigDecimal(value)
-            long sourceId = 0l
-            long targetId = 1l
-            Locale locale = Locale.US
-            Locale targetLocale = Locale.ITALY
-            Currency currency = Currency.getInstance(locale)
-            Currency targetCurrency = Currency.getInstance(targetLocale)
+        float value = 0.0f
+        def cardinality = new BigDecimal(value)
+        long sourceId = 0l
+        long targetId = 1l
+        Locale locale = Locale.US
+        Locale targetLocale = Locale.ITALY
+        Currency currency = Currency.getInstance(locale)
+        Currency targetCurrency = Currency.getInstance(targetLocale)
 
         def source = PersonTransportObject
                 .builder()
@@ -199,7 +199,7 @@ class ExchangeServiceSpec extends Specification {
                 .id(targetId)
                 .build()
 
-            Transaction transaction = Transaction
+        Transaction transaction = Transaction
                 .builder()
                 .sourcePersonId(sourceId)
                 .targetPersonId(targetId)
@@ -207,14 +207,14 @@ class ExchangeServiceSpec extends Specification {
                 .cardinality(cardinality)
                 .build()
 
-            personService.getPerson(sourceId) >> source
-            personService.getPerson(targetId) >> target
+        personService.getPerson(sourceId) >> source
+        personService.getPerson(targetId) >> target
 
         when:
-            exchangeService.exchange(transaction)
+        exchangeService.exchange(transaction)
 
         then:
-            InvalidTransactionException thrown = thrown()
-            thrown.getMessage() == ExchangeService.INVALID_TARGET_CURRENCY
+        InvalidTransactionException thrown = thrown()
+        thrown.getMessage() == ExchangeService.INVALID_TARGET_CURRENCY
     }
 }

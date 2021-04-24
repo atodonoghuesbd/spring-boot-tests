@@ -12,32 +12,50 @@ class PersonControllerSpec extends Specification {
 
     def "setup"() {
         personService = Mock()
+        personController = new PersonController(personService)
     }
 
 
     def "getPeople"() {
         given:
-            personController = new PersonController(personService)
-
-            person = PersonTransportObject
+        person = PersonTransportObject
                 .builder()
                 .wallet(WalletTransportObject
                         .builder().build())
                 .build()
 
         when:
-            personController.getPeople()
+        personController.getPeople()
 
         then:
-            1 * personService.getPeople() >> Collections.singletonList(person)
+        1 * personService.getPeople() >> Collections.singletonList(person)
     }
 
     def "getPerson"() {
-        // todo: implement me
+        given:
+        Long id = 0l
+
+        when:
+        personController.getPerson(id)
+
+        then:
+        1 * personService.getPerson(id)
+
     }
 
     def "postPerson"() {
-        // todo: implement me
+        given:
+        person = PersonTransportObject
+                .builder()
+                .wallet(WalletTransportObject
+                        .builder().build())
+                .build()
+
+        when:
+        personController.postPerson(person)
+
+        then:
+        1 * personService.postPerson(person)
     }
 
 }
