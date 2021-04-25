@@ -81,7 +81,6 @@ public class ExchangeService {
                 .findAny()
                 .get();
 
-
         Currency currency = getCurrency(transaction);
         BigDecimal sourceCardinality = getCardinality(source);
         BigDecimal cardinality = getCardinality(transaction);
