@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.util.Currency;
+import java.util.stream.Stream;
 
 @Service
 public class ExchangeService {
@@ -68,19 +69,25 @@ public class ExchangeService {
      */
 
     public String exchange(Transaction transaction) {
+        PersonTransportObject source = Stream.of(transaction)
+                .map(Transaction::getSourcePersonId)
+                .map(this::getPerson)
+                .findAny()
+                .get();
 
-        PersonTransportObject source = getPerson(transaction.getSourcePersonId());
-        PersonTransportObject target = getPerson(transaction.getTargetPersonId());
+        PersonTransportObject target = Stream.of(transaction)
+                .map(Transaction::getTargetPersonId)
+                .map(this::getPerson)
+                .findAny()
+                .get();
 
-        Currency sourceCurrency = getCurrency(source);
-        Currency targetCurrency = getCurrency(target);
+
         Currency currency = getCurrency(transaction);
-
         BigDecimal sourceCardinality = getCardinality(source);
         BigDecimal cardinality = getCardinality(transaction);
 
-        validateSourceCurrency(sourceCurrency, currency);
-        validateTargetCurrency(targetCurrency, currency);
+        validateSourceCurrency(getCurrency(source), currency);
+        validateTargetCurrency(getCurrency(target), currency);
         validateFunds(sourceCardinality, cardinality);
 
         executeTransaction(source, target, cardinality);
