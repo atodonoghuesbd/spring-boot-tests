@@ -4,12 +4,12 @@ import com.example.springboottests.model.transport.PersonTransportObject;
 import com.example.springboottests.service.data.PersonService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -25,18 +25,18 @@ public class PersonController {
     }
 
     @GetMapping(value = "/")
-    public ResponseEntity<List<PersonTransportObject>> getPeople() {
-        return new ResponseEntity<>(personService.getPeople(), HttpStatus.OK);
+    public List<PersonTransportObject> getPeople() {
+        return personService.getPeople();
     }
 
     @GetMapping(value = "/{id}")
-    public ResponseEntity<PersonTransportObject> getPerson(@PathVariable(value = "id") Long id) {
-        return new ResponseEntity<>(personService.getPerson(id), HttpStatus.OK);
+    public PersonTransportObject getPerson(@PathVariable(value = "id") Long id) {
+        return personService.getPerson(id);
     }
 
     @PostMapping(value = "/")
-    public ResponseEntity<String> postPerson(@RequestBody PersonTransportObject person) {
+    @ResponseStatus(HttpStatus.CREATED)
+    public void postPerson(@RequestBody PersonTransportObject person) {
         personService.postPerson(person);
-        return new ResponseEntity<>("", HttpStatus.CREATED);
     }
 }

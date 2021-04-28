@@ -25,6 +25,44 @@ public class ExchangeService {
         this.personService = personService;
     }
 
+    /**
+     * This service should accept a Transaction request, containing the IDs of a target and source.
+     * <p>
+     * If the IDs map to users with differing currencies the transaction should fail. An appropriate failure message
+     * should be returned.
+     * <p>
+     * If the source's currency cardinality is exceeded by the transaction cardinality the transaction should fail. An
+     * appropriate failure message should be returned.
+     * <p>
+     * If the transaction is otherwise valid it should report a message of success.
+     */
+
+    public String exchange(Transaction transaction) {
+        PersonTransportObject source = Stream.of(transaction)
+                .map(Transaction::getSourcePersonId)
+                .map(this::getPerson)
+                .findAny()
+                .get();
+
+        PersonTransportObject target = Stream.of(transaction)
+                .map(Transaction::getTargetPersonId)
+                .map(this::getPerson)
+                .findAny()
+                .get();
+
+        Currency currency = getCurrency(transaction);
+        BigDecimal sourceCardinality = getCardinality(source);
+        BigDecimal cardinality = getCardinality(transaction);
+
+        validateSourceCurrency(getCurrency(source), currency);
+        validateTargetCurrency(getCurrency(target), currency);
+        validateFunds(sourceCardinality, cardinality);
+
+        executeTransaction(source, target, cardinality);
+
+        return SUCCESS;
+    }
+
     private static BigDecimal getCardinality(PersonTransportObject personTransportObject) {
         return personTransportObject.getWallet().getCardinality();
     }
@@ -54,45 +92,6 @@ public class ExchangeService {
     private static void validateFunds(BigDecimal sourceCardinality, BigDecimal cardinality) {
         if (0 < cardinality.compareTo(sourceCardinality))
             throw new InvalidTransactionException(INSUFFICIENT_FUNDS);
-    }
-
-    /**
-     * This service should accept a Transaction request, containing the IDs of a target and source.
-     * <p>
-     * If the IDs map to users with differing currencies the transaction should fail. An appropriate failure message
-     * should be returned.
-     * <p>
-     * If the source's currency cardinality is exceeded by the transaction cardinality the transaction should fail. An
-     * appropriate failure message should be returned.
-     * <p>
-     * If the transaction is otherwise valid it should report a message of success.
-     */
-
-    public String exchange(Transaction transaction) {
-        PersonTransportObject source = Stream.of(transaction)
-                .map(Transaction::getSourcePersonId)
-                .map(this::getPerson)
-                .findAny()
-                .get();
-
-        PersonTransportObject target = Stream.of(transaction)
-                .map(Transaction::getTargetPersonId)
-                .map(this::getPerson)
-                .findAny()
-                .get();
-
-
-        Currency currency = getCurrency(transaction);
-        BigDecimal sourceCardinality = getCardinality(source);
-        BigDecimal cardinality = getCardinality(transaction);
-
-        validateSourceCurrency(getCurrency(source), currency);
-        validateTargetCurrency(getCurrency(target), currency);
-        validateFunds(sourceCardinality, cardinality);
-
-        executeTransaction(source, target, cardinality);
-
-        return SUCCESS;
     }
 
     private PersonTransportObject getPerson(Long id) {
