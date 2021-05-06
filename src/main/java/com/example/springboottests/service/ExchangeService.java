@@ -38,21 +38,21 @@ public class ExchangeService {
      */
 
     public String exchange(Transaction transaction) {
-        PersonTransportObject source = Stream.of(transaction)
+        var source = Stream.of(transaction)
                 .map(Transaction::getSourcePersonId)
                 .map(this::getPerson)
                 .findAny()
                 .get();
 
-        PersonTransportObject target = Stream.of(transaction)
+        var target = Stream.of(transaction)
                 .map(Transaction::getTargetPersonId)
                 .map(this::getPerson)
                 .findAny()
                 .get();
 
-        Currency currency = getCurrency(transaction);
-        BigDecimal sourceCardinality = getCardinality(source);
-        BigDecimal cardinality = getCardinality(transaction);
+        var currency = getCurrency(transaction);
+        var sourceCardinality = getCardinality(source);
+        var cardinality = getCardinality(transaction);
 
         validateSourceCurrency(getCurrency(source), currency);
         validateTargetCurrency(getCurrency(target), currency);

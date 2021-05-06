@@ -13,6 +13,7 @@ class ExchangeControllerSpec extends Specification {
     }
 
     def "exchange"() {
+
         when:
         exchangeController.exchange(Transaction.builder().build())
 
