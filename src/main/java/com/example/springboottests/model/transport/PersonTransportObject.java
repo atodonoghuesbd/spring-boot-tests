@@ -14,8 +14,9 @@ import lombok.Setter;
 @NoArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class PersonTransportObject {
-    private Long id;
-    private String firstName;
-    private String lastName;
-    private WalletTransportObject wallet;
+
+  private Long id;
+  private String firstName;
+  private String lastName;
+  private WalletTransportObject wallet;
 }

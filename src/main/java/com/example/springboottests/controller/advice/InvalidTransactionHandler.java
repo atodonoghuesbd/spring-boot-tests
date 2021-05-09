@@ -11,8 +11,10 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 
 @ControllerAdvice
 public class InvalidTransactionHandler extends ResponseEntityExceptionHandler {
-    @ExceptionHandler(value = InvalidTransactionException.class)
-    protected ResponseEntity<Object> handleConflict(RuntimeException ex, WebRequest request) {
-        return handleExceptionInternal(ex, ex.getMessage(), new HttpHeaders(), HttpStatus.BAD_REQUEST, request);
-    }
+
+  @ExceptionHandler(value = InvalidTransactionException.class)
+  protected ResponseEntity<Object> handleConflict(RuntimeException ex, WebRequest request) {
+    return handleExceptionInternal(ex, ex.getMessage(), new HttpHeaders(), HttpStatus.BAD_REQUEST,
+        request);
+  }
 }

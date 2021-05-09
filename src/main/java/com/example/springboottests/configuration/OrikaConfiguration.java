@@ -12,29 +12,30 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 public class OrikaConfiguration {
-    private static final MapperFactory mapperFactory = new DefaultMapperFactory.Builder().build();
 
-    static {
-        registerPersonMapper(mapperFactory);
-        registerWalletMapper(mapperFactory);
-    }
+  private static final MapperFactory mapperFactory = new DefaultMapperFactory.Builder().build();
 
-    private static void registerPersonMapper(MapperFactory mapperFactory) {
-        mapperFactory.classMap(PersonEntity.class, PersonTransportObject.class)
-                .field("first_name", "firstName")
-                .field("last_name", "lastName")
-                .byDefault()
-                .register();
-    }
+  static {
+    registerPersonMapper(mapperFactory);
+    registerWalletMapper(mapperFactory);
+  }
 
-    private static void registerWalletMapper(MapperFactory mapperFactory) {
-        mapperFactory.classMap(WalletEntity.class, WalletTransportObject.class)
-                .byDefault()
-                .register();
-    }
+  private static void registerPersonMapper(MapperFactory mapperFactory) {
+    mapperFactory.classMap(PersonEntity.class, PersonTransportObject.class)
+        .field("first_name", "firstName")
+        .field("last_name", "lastName")
+        .byDefault()
+        .register();
+  }
 
-    @Bean
-    public static MapperFacade mapperFacade() {
-        return mapperFactory.getMapperFacade();
-    }
+  private static void registerWalletMapper(MapperFactory mapperFactory) {
+    mapperFactory.classMap(WalletEntity.class, WalletTransportObject.class)
+        .byDefault()
+        .register();
+  }
+
+  @Bean
+  public static MapperFacade mapperFacade() {
+    return mapperFactory.getMapperFacade();
+  }
 }
