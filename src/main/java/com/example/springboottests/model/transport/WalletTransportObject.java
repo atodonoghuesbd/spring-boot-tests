@@ -16,7 +16,6 @@ import lombok.Setter;
 @NoArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class WalletTransportObject {
-
   private Long id;
   private Currency currency;
   private BigDecimal cardinality;

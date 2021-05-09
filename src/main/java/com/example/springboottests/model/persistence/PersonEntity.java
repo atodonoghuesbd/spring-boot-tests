@@ -13,7 +13,6 @@ import lombok.Setter;
 @Setter
 @Entity(name = "person")
 public class PersonEntity {
-
   @Id
   @Column
   @GeneratedValue(strategy = GenerationType.IDENTITY)
