@@ -1,0 +1,50 @@
+<xs:schema xmlns:tns="https://springboottests.example.com/ws/person-service" xmlns:xs="http://www.w3.org/2001/XMLSchema"
+  elementFormDefault="qualified" targetNamespace="https://springboottests.example.com/ws/person-service">
+
+  <xs:complexType name="getPersonRequest">
+    <xs:sequence>
+      <xs:element name="id" type="xs:long"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="person">
+    <xs:sequence>
+      <xs:element name="id" type="xs:long"/>
+      <xs:element name="firstName" type="xs:string"/>
+      <xs:element name="lastName" type="xs:string"/>
+      <xs:element name="wallet" type="tns:wallet"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="wallet">
+    <xs:sequence>
+      <xs:element name="currency" type="xs:string"/>
+      <xs:element name="cardinality" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:element name="getPersonResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="person" type="tns:person"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="postPersonRequest">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="person" type="tns:person"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="getPeopleResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="people" type="tns:person"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+</xs:schema>

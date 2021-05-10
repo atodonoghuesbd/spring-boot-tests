@@ -50,12 +50,38 @@
         <groupId>org.codehaus.gmavenplus</groupId>
         <version>${gmavenplus-plugin.version}</version>
       </plugin>
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>jaxb2-maven-plugin</artifactId>
+        <version>${jaxb2-maven-plugin.version}</version>
+        <executions>
+          <execution>
+            <id>xjc</id>
+            <goals>
+              <goal>xjc</goal>
+            </goals>
+          </execution>
+        </executions>
+        <configuration>
+          <sources>
+            <source>${project.basedir}/src/main/xsd</source>
+          </sources>
+        </configuration>
+      </plugin>
     </plugins>
   </build>
   <dependencies>
     <dependency>
       <artifactId>spring-boot-starter-web</artifactId>
       <groupId>org.springframework.boot</groupId>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-web-services</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>wsdl4j</groupId>
+      <artifactId>wsdl4j</artifactId>
     </dependency>
     <dependency>
       <artifactId>spring-boot-starter-data-jdbc</artifactId>
@@ -112,6 +138,16 @@
       <groupId>org.projectlombok</groupId>
       <scope>provided</scope>
     </dependency>
+    <dependency>
+      <groupId>org.glassfish.jaxb</groupId>
+      <artifactId>jaxb-runtime</artifactId>
+      <version>${jaxb-runtime.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>jakarta.xml.bind</groupId>
+      <artifactId>jakarta.xml.bind-api</artifactId>
+      <version>${jaxb-runtime.version}</version>
+    </dependency>
   </dependencies>
   <description>Demo project for Spring Boot</description>
   <groupId>com.example</groupId>
@@ -131,6 +167,8 @@
     <orika.version>1.5.4</orika.version>
     <spock.version>2.0-M5-groovy-3.0</spock.version>
     <surefire.version>3.0.0-M5</surefire.version>
+    <jaxb2-maven-plugin.version>2.5.0</jaxb2-maven-plugin.version>
+    <jaxb-runtime.version>3.0.1</jaxb-runtime.version>
   </properties>
   <version>0.0.1-SNAPSHOT</version>
 </project>

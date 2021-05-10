@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/person")
-public class PersonController {
+public class PersonController implements PersonService<PersonTransportObject>{
 
   private final PersonService<PersonTransportObject> personService;
 
@@ -24,19 +24,27 @@ public class PersonController {
     this.personService = personService;
   }
 
+  @Override
   @GetMapping(value = "/")
   public List<PersonTransportObject> getPeople() {
     return personService.getPeople();
   }
 
+  @Override
   @GetMapping(value = "/{id}")
   public PersonTransportObject getPerson(@PathVariable(value = "id") Long id) {
     return personService.getPerson(id);
   }
 
+  @Override
   @PostMapping(value = "/")
   @ResponseStatus(HttpStatus.CREATED)
   public void postPerson(@RequestBody PersonTransportObject person) {
+    savePerson(person);
+  }
+
+  @Override
+  public void savePerson(PersonTransportObject person) {
     personService.postPerson(person);
   }
 }

@@ -29,7 +29,7 @@ public class PersonService implements
     return mapperFacade.map(personRepository.findById(id), PersonTransportObject.class);
   }
 
-    public void postPerson(PersonTransportObject personTransportObject) {
+  public void postPerson(PersonTransportObject personTransportObject) {
     personRepository.save(mapperFacade.map(personTransportObject, PersonEntity.class));
   }
 
