@@ -19,11 +19,11 @@ public class ExchangeService implements
   protected static final String INVALID_TARGET_CURRENCY = "No exchange transacted, transaction currency and target currency mismatch.";
   protected static final String INSUFFICIENT_FUNDS = "Insufficient source cardinality for transaction.";
   protected static final String SUCCESS = "Exchange transacted successfully.";
+
   private final PersonService personService;
 
   @Autowired
-  public ExchangeService(PersonService personService) {
-    this.personService = personService;
+  public ExchangeService(PersonService personService) {    this.personService = personService;
   }
 
   /**
@@ -80,14 +80,14 @@ public class ExchangeService implements
     return transaction.getCardinality();
   }
 
+  private static Currency getCurrency(PersonTransportObject personTransportObject) {
+    return personTransportObject.getWallet().getCurrency();
+  }
+
   private static void validateSourceCurrency(Currency sourceCurrency, Currency currency) {
     if (sourceCurrency != currency) {
       throw new InvalidTransactionException(INVALID_SOURCE_CURRENCY);
     }
-  }
-
-  private static Currency getCurrency(PersonTransportObject personTransportObject) {
-    return personTransportObject.getWallet().getCurrency();
   }
 
   private static void validateTargetCurrency(Currency targetCurrency, Currency currency) {

@@ -218,22 +218,6 @@ class ExchangeServiceSpec extends Specification {
         thrown.getMessage() == ExchangeService.INVALID_TARGET_CURRENCY
     }
 
-    def "transactional rollback"() {
-        // todo: implement me
-    }
-
-    def "transaction updates wallet"() {
-        // todo: implement me
-    }
-
-    def "source not found in data"() {
-        // todo: implement me
-    }
-
-    def "target not found in data"() {
-        // todo: implement me
-    }
-
     def "target locale undefined"() {
         // todo: implement me
     }

@@ -112,6 +112,12 @@
       <groupId>org.projectlombok</groupId>
       <scope>provided</scope>
     </dependency>
+    <dependency>
+      <groupId>org.jeasy</groupId>
+      <artifactId>easy-random-core</artifactId>
+      <version>${easy-random.version}</version>
+      <scope>test</scope>
+    </dependency>
   </dependencies>
   <description>Demo project for Spring Boot</description>
   <groupId>com.example</groupId>
@@ -131,6 +137,7 @@
     <orika.version>1.5.4</orika.version>
     <spock.version>2.0-M5-groovy-3.0</spock.version>
     <surefire.version>3.0.0-M5</surefire.version>
+    <easy-random.version>5.0.0</easy-random.version>
   </properties>
   <version>0.0.1-SNAPSHOT</version>
 </project>

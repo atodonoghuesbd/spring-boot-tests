@@ -13,11 +13,13 @@ class ExchangeControllerSpec extends Specification {
     }
 
     def "exchange"() {
+        given:
+        exchangeService.exchange(_ as Transaction) >> null
 
         when:
         exchangeController.exchange(Transaction.builder().build())
 
         then:
-        1 * exchangeService.exchange(_ as Transaction) >> new String()
+        1 * exchangeService.exchange(_ as Transaction)
     }
 }

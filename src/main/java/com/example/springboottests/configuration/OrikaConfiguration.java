@@ -38,4 +38,5 @@ public class OrikaConfiguration {
   public static MapperFacade mapperFacade() {
     return mapperFactory.getMapperFacade();
   }
+
 }
